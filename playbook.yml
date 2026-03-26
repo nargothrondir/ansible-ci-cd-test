@@ -1,0 +1,14 @@
+---
+- name: Тестовый playbook для CI/CD
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Просто выводим сообщение
+      ansible.builtin.debug:
+        msg: "Привет! Это тест CI/CD для Ansible Playbooks 🎉"
+
+    - name: Создаём тестовый файл (в режиме check ничего не изменится)
+      ansible.builtin.copy:
+        content: "Это тест CI/CD\n"
+        dest: /tmp/test-ci-cd.txt
+        mode: '0644'

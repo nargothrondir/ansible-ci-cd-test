@@ -1,0 +1,26 @@
+name: Ansible CD (Manual Deploy)
+
+on:
+  workflow_dispatch:   # Запускается вручную из интерфейса GitHub
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production   # Можно потом добавить approval
+
+    steps:
+      - name: Checkout код
+        uses: actions/checkout@v4
+
+      - name: Установка Python и Ansible
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Установка Ansible
+        run: |
+          python -m pip install --upgrade pip
+          pip install "ansible>=8"
+
+      - name: Запуск playbook (реальный deploy)
+        run: ansible-playbook -i inventory.ini playbook.yml --diff

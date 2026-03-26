@@ -1,0 +1,37 @@
+name: Ansible CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout код
+        uses: actions/checkout@v4
+
+      - name: Установка Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Установка Ansible и ansible-lint
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible ansible-lint
+
+      - name: Проверка версии Ansible
+        run: ansible --version
+
+      - name: Lint (ansible-lint)
+        run: ansible-lint playbook.yml
+
+      - name: Проверка синтаксиса playbook
+        run: ansible-playbook --syntax-check playbook.yml
+
+      - name: Dry-run (ansible-playbook --check)
+        run: ansible-playbook -i inventory.ini playbook.yml --check --diff

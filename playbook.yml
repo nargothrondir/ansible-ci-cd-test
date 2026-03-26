@@ -5,7 +5,7 @@
   tasks:
     - name: Просто выводим сообщение
       ansible.builtin.debug:
-        msg: "Привет! Это тест CI/CD для Ansible Playbooks 🎉"
+        msg: "Привет! Это тест CI/CD для Ansible Playbooks 🎉
 
     - name: Создаём тестовый файл (в режиме check ничего не изменится)
       ansible.builtin.copy:
